@@ -92,7 +92,7 @@ public class Imagen {
             }
         }
     }
-    public Image imprimirImagen(){
+    public BufferedImage imprimirImagen(){
         BufferedImage salida = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_RGB);
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {

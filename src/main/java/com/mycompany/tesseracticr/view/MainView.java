@@ -5,9 +5,16 @@
  */
 package com.mycompany.tesseracticr.view;
 
+import controler.ImageController;
+import controler.Imagen;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -45,6 +52,16 @@ public class MainView extends javax.swing.JFrame {
         textResult = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        originalImage1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        modificatedImage1 = new javax.swing.JLabel();
+        btn_bina = new javax.swing.JButton();
+        openFile1 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        outText1 = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -102,15 +119,103 @@ public class MainView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("OCR", jPanel1);
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabel1.setText("Tesseract OCR / ICR");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Imagen Original:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Previsualización:");
+
+        btn_bina.setText("Binarizar");
+        btn_bina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_binaActionPerformed(evt);
+            }
+        });
+
+        openFile1.setText("Seleccionar Imagen");
+        openFile1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFile1ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jButton5.setText("Procesar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        outText1.setColumns(20);
+        outText1.setRows(5);
+        jScrollPane2.setViewportView(outText1);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(209, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(157, 157, 157))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(originalImage1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(openFile1))
+                        .addGap(177, 177, 177)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_bina)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(modificatedImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 472, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(btn_bina))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(openFile1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(originalImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(modificatedImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42))))
         );
 
         jTabbedPane1.addTab("OCR - Datos", jPanel2);
@@ -153,26 +258,60 @@ public class MainView extends javax.swing.JFrame {
         filechoose.setFileFilter(extFile);
         int selected = filechoose.showOpenDialog(this);
         if(selected == JFileChooser.APPROVE_OPTION){
-            file = filechoose.getSelectedFile();
-            getImage = file.getAbsolutePath();
-            ImageIcon img = new ImageIcon(getImage);
-            Image fit = img.getImage();
-            fit = fit.getScaledInstance(imagePresent.getWidth(), imagePresent.getHeight(), Image.SCALE_SMOOTH);
-            imagePresent.setIcon(new ImageIcon(fit));
+            fileTab1 = filechoose.getSelectedFile();
+            getImage = fileTab1.getAbsolutePath();
+            control.setLabelWithImagePath(imagePresent, getImage);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String text="";
-        ITesseract process= new Tesseract();
         try {
-            text = process.doOCR(file);
+            text = process.doOCR(fileTab1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen primero");
         }
         textResult.setText(text);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btn_binaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_binaActionPerformed
+        // TODO add your handling code here:
+        Imagen img = new Imagen(pathImage1);
+        img.binarizarImagen(100);
+        imageTab2 = img.imprimirImagen();
+        try {
+            ImageIO.write(imageTab2, "png", new File("result.png"));
+            FileTab2= new File("result.png");
+        } catch (IOException ex) {
+            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        control.setLabelWithImage(imageTab2, modificatedImage1);
+    }//GEN-LAST:event_btn_binaActionPerformed
+
+    private void openFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFile1ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser filechoose = new JFileChooser();
+        FileNameExtensionFilter extFile = new FileNameExtensionFilter("jpg, png, jpeg", "jpg","png","jpeg");
+        filechoose.setFileFilter(extFile);
+        int selected = filechoose.showOpenDialog(this);
+        if(selected == JFileChooser.APPROVE_OPTION){
+            FileTab2 = filechoose.getSelectedFile();
+            pathImage1 = FileTab2.getAbsolutePath();
+            control.setLabelWithImagePath(originalImage1, pathImage1);
+        }
+    }//GEN-LAST:event_openFile1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+       String text="";
+       try {
+            text = process.doOCR(FileTab2);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen primero");
+        }
+        outText1.setText(text);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,17 +349,36 @@ public class MainView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_bina;
     private javax.swing.JLabel imagePresent;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel modificatedImage1;
+    private javax.swing.JButton openFile1;
+    private javax.swing.JLabel originalImage1;
+    private javax.swing.JTextArea outText1;
     private javax.swing.JTextArea textResult;
     // End of variables declaration//GEN-END:variables
     private String getImage="";
-    File file=null;
+    File fileTab1=null;
+    File FileTab3=null;
+    File FileTab2=null;
+    BufferedImage imageTab1=null;
+    BufferedImage imageTab2=null;
+    BufferedImage imageTab3=null;
+    private ImageController control = new ImageController();
+    private String pathImage1="";
+    private String pathImage2="";
+    ITesseract process= new Tesseract();
 }
 

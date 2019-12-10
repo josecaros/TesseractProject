@@ -19,11 +19,16 @@ public class ImageController {
         
     } 
     
-    public void setLabelWithImage( JLabel label, String path){
+    public void setLabelWithImagePath( JLabel label, String path){
         ImageIcon img = new ImageIcon(path);
-            Image fit = img.getImage();
-            fit = fit.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
-            label.setIcon(new ImageIcon(fit));
+        Image fit = img.getImage();
+        fit = fit.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(fit));
+    }
+    
+    public void setLabelWithImage(Image ima, JLabel label){
+        ima= ima.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+        label.setIcon(new ImageIcon(ima));
     }
     
 }
