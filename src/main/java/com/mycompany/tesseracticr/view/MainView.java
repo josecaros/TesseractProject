@@ -33,7 +33,7 @@ public class MainView extends javax.swing.JFrame {
      * Creates new form MainView
      */
     public MainView() {
-        process.setLanguage("spa");
+        //process.setLanguage("spa");
         initComponents();
     }
 
@@ -305,14 +305,18 @@ public class MainView extends javax.swing.JFrame {
 
     private void openFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFile1ActionPerformed
         // TODO add your handling code here:
-        JFileChooser filechoose = new JFileChooser();
+        
         FileNameExtensionFilter extFile = new FileNameExtensionFilter("jpg, png, jpeg", "jpg","png","jpeg");
         filechoose.setFileFilter(extFile);
+        
         int selected = filechoose.showOpenDialog(this);
         if(selected == JFileChooser.APPROVE_OPTION){
             FileTab2 = filechoose.getSelectedFile();
             pathImage1 = FileTab2.getAbsolutePath();
             control.setLabelWithImagePath(originalImage1, pathImage1);
+        }
+        if(FileTab2!=null){
+            filechoose.setCurrentDirectory(FileTab2);
         }
     }//GEN-LAST:event_openFile1ActionPerformed
 
@@ -421,7 +425,6 @@ public class MainView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private String getImage="";
     File fileTab1=null;
-    File FileTab3=null;
     File FileTab2=null;
     BufferedImage originalTab2=null;
     BufferedImage imageTab1=null;
@@ -431,5 +434,7 @@ public class MainView extends javax.swing.JFrame {
     private String pathImage1="";
     private String pathImage2="";
     ITesseract process= new Tesseract();
+    boolean att=false;
+    JFileChooser filechoose = new JFileChooser();
 }
 
