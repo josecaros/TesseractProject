@@ -6,6 +6,7 @@
 package com.mycompany.tesseracticr.view;
 
 import controler.ImageController;
+import controler.ImageRotate;
 import controler.Imagen;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -32,6 +33,7 @@ public class MainView extends javax.swing.JFrame {
      * Creates new form MainView
      */
     public MainView() {
+        process.setLanguage("spa");
         initComponents();
     }
 
@@ -65,7 +67,8 @@ public class MainView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         text_umbral = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        rotate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,7 +123,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
-        jTabbedPane1.addTab("OCR", jPanel1);
+        jTabbedPane1.addTab("Simple OCR", jPanel1);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setText("Tesseract OCR / ICR");
@@ -164,6 +167,15 @@ public class MainView extends javax.swing.JFrame {
 
         jLabel5.setText("Umbral:");
 
+        jLabel6.setText("Rotar:");
+
+        rotate.setText("0");
+        rotate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rotateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -192,9 +204,17 @@ public class MainView extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(btn_bina, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(text_umbral, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addComponent(jLabel6)
+                                            .addGap(10, 10, 10)))
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(text_umbral, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                                        .addComponent(rotate))
+                                    .addGap(15, 15, 15))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(modificatedImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
@@ -217,7 +237,7 @@ public class MainView extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(openFile1)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(originalImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -228,8 +248,13 @@ public class MainView extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
                                     .addComponent(text_umbral, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_bina, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(rotate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(24, 24, 24)
+                                .addComponent(btn_bina, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(modificatedImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -243,20 +268,7 @@ public class MainView extends javax.swing.JFrame {
                         .addGap(42, 42, 42))))
         );
 
-        jTabbedPane1.addTab("OCR - Datos", jPanel2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 695, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 472, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("ICR - Datos Entrenados", jPanel3);
+        jTabbedPane1.addTab("Preprocesamiento ICR", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -276,44 +288,20 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void rotateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateActionPerformed
         // TODO add your handling code here:
-        JFileChooser filechoose = new JFileChooser();
-        FileNameExtensionFilter extFile = new FileNameExtensionFilter("jpg, png, jpeg", "jpg","png","jpeg");
-        filechoose.setFileFilter(extFile);
-        int selected = filechoose.showOpenDialog(this);
-        if(selected == JFileChooser.APPROVE_OPTION){
-            fileTab1 = filechoose.getSelectedFile();
-            getImage = fileTab1.getAbsolutePath();
-            control.setLabelWithImagePath(imagePresent, getImage);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_rotateActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String text="";
         try {
-            text = process.doOCR(fileTab1);
+            text = process.doOCR(FileTab2);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen primero");
         }
-        textResult.setText(text);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void btn_binaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_binaActionPerformed
-        // TODO add your handling code here:
-        Imagen img = new Imagen(pathImage1);
-        int umbral = Integer.parseInt(text_umbral.getText());
-        img.binarizarImagen(umbral);
-        imageTab2 = img.imprimirImagen();
-        try {
-            ImageIO.write(imageTab2, "png", new File("result.png"));
-            FileTab2= new File("result.png");
-        } catch (IOException ex) {
-            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        control.setLabelWithImage(imageTab2, modificatedImage1);
-    }//GEN-LAST:event_btn_binaActionPerformed
+        outText1.setText(text);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void openFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFile1ActionPerformed
         // TODO add your handling code here:
@@ -328,16 +316,48 @@ public class MainView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_openFile1ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btn_binaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_binaActionPerformed
         // TODO add your handling code here:
-       String text="";
-       try {
-            text = process.doOCR(FileTab2);
+        Imagen img = new Imagen(pathImage1);
+        int umbral = Integer.parseInt(text_umbral.getText());
+        img.binarizarImagen(umbral);
+        imageTab2 = img.imprimirImagen();
+        double grados=Double.parseDouble(rotate.getText());
+        if(grados!=0){
+            imageTab2=ImageRotate.rotacionImagen(imageTab2, grados);
+        }
+        try {
+            ImageIO.write(imageTab2, "png", new File("result.png"));
+            FileTab2= new File("result.png");
+        } catch (IOException ex) {
+            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        control.setLabelWithImage(imageTab2, modificatedImage1);
+    }//GEN-LAST:event_btn_binaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String text="";
+        try {
+            text = process.doOCR(fileTab1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una imagen primero");
         }
-        outText1.setText(text);
-    }//GEN-LAST:event_jButton5ActionPerformed
+        textResult.setText(text);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser filechoose = new JFileChooser();
+        FileNameExtensionFilter extFile = new FileNameExtensionFilter("jpg, png, jpeg", "jpg","png","jpeg");
+        filechoose.setFileFilter(extFile);
+        int selected = filechoose.showOpenDialog(this);
+        if(selected == JFileChooser.APPROVE_OPTION){
+            fileTab1 = filechoose.getSelectedFile();
+            getImage = fileTab1.getAbsolutePath();
+            control.setLabelWithImagePath(imagePresent, getImage);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -385,9 +405,9 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -395,6 +415,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton openFile1;
     private javax.swing.JLabel originalImage1;
     private javax.swing.JTextArea outText1;
+    private javax.swing.JTextField rotate;
     private javax.swing.JTextArea textResult;
     private javax.swing.JTextField text_umbral;
     // End of variables declaration//GEN-END:variables
